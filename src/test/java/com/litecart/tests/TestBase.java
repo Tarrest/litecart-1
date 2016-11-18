@@ -1,9 +1,9 @@
 package com.litecart.tests;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
@@ -12,23 +12,40 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import java.lang.reflect.Method;
-import java.util.concurrent.TimeUnit;
 
 public class TestBase {
-    FirefoxDriver wd;
 
-    Logger logger = LoggerFactory.getLogger(LoginTest.class);
+    public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
+    public WebDriver wd;
+    public WebDriverWait wait;
+
+    Logger logger = LoggerFactory.getLogger(SeleniumTest.class);
 
     @BeforeSuite
-    public void setUp() throws Exception {
-        wd = new FirefoxDriver();
-        wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        wd.get("https://www.google.com/");
+    public void setUp() {
+        if (tlDriver.get() != null) {
+            wd = tlDriver.get();
+            wait = new WebDriverWait(wd, 10);
+            return;
+        }
+        DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setCapability(FirefoxDriver.MARIONETTE, false);
+        wd = new FirefoxDriver(caps);
+        tlDriver.set(wd);
+        System.out.println(((HasCapabilities) wd).getCapabilities());
+        wait = new WebDriverWait(wd, 10);
+
+        Runtime.getRuntime().addShutdownHook(
+                new Thread(() -> {
+                    wd.quit();
+                    wd = null;
+                }));
     }
 
     @AfterSuite(alwaysRun = true)
     public void tearDown() {
         wd.quit();
+        wd = null;
     }
 
     @BeforeMethod
@@ -39,6 +56,10 @@ public class TestBase {
     @AfterMethod(alwaysRun = true)
     public void logTestStop(Method m, Object[] p) {
         logger.info("Stop test " + m.getName());
+    }
+
+    public void navigateTo(String url) {
+        wd.get(url);
     }
 
     public void click(By locator) {
