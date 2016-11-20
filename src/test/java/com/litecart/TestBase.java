@@ -1,4 +1,4 @@
-package com.litecart.tests;
+package com.litecart;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -11,6 +11,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 public class TestBase {
@@ -22,7 +23,7 @@ public class TestBase {
     Logger logger = LoggerFactory.getLogger(SeleniumTest.class);
 
     @BeforeSuite
-    public void setUp() {
+    public void setUp() throws IOException {
         if (tlDriver.get() != null) {
             wd = tlDriver.get();
             wait = new WebDriverWait(wd, 10);
@@ -75,6 +76,12 @@ public class TestBase {
                 wd.findElement(locator).sendKeys(text);
             }
         }
+    }
+
+    void login(String username, String password) {
+        type(By.name("username"), username);
+        type(By.name("password"), password);
+        click(By.name("login"));
     }
 
     public boolean isAlertPresent() {
