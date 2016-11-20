@@ -2,8 +2,12 @@ package com.litecart;
 
 import com.litecart.ApplicationManager.ApplicationManager;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,12 +16,15 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.Properties;
 
 public class TestBase extends ApplicationManager {
     public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
-    //    public Properties properties;
+    public Properties properties;
     public WebDriver wd;
     public WebDriverWait wait;
 
@@ -25,38 +32,37 @@ public class TestBase extends ApplicationManager {
 
     @BeforeSuite
     public void setUp() throws IOException {
-        if (tlDriver.get() != null) {
-            wd = tlDriver.get();
-            wait = new WebDriverWait(wd, 10);
-            return;
-        }
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setCapability(FirefoxDriver.MARIONETTE, false);
-        wd = new FirefoxDriver(caps);
-        tlDriver.set(wd);
-        System.out.println(((HasCapabilities) wd).getCapabilities());
-        wait = new WebDriverWait(wd, 10);
-    }
-
-//    public void setUp() throws IOException {
+        String browser = BrowserType.FIREFOX;
 //        String target = System.getProperty("target", "local");
 //        properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-//
-//        String browser = BrowserType.FIREFOX;
-//        if (browser.equals(BrowserType.FIREFOX)) {
-//            wd = new FirefoxDriver();
-//        } else if (browser.equals(BrowserType.CHROME)) {
-//            wd = new ChromeDriver();
-//        } else if (browser.equals(BrowserType.IE)) {
-//            wd = new InternetExplorerDriver();
-//        } else if (browser.equals(BrowserType.SAFARI)) {
-//            wd = new SafariDriver();
-//        }
-//
-//        wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+        if (tlDriver.get() != null) {
+            wd = tlDriver.get();
+            wait = new WebDriverWait(wd, 0);
+            return;
+        }
+        if (browser.equals(BrowserType.FIREFOX)) {
+            DesiredCapabilities caps = new DesiredCapabilities();
+            caps.setCapability(FirefoxDriver.MARIONETTE, false);
+            wd = new FirefoxDriver(caps);
+            tlDriver.set(wd);
+        } else if (browser.equals(BrowserType.CHROME)) {
+            wd = new ChromeDriver();
+            tlDriver.set(wd);
+        } else if (browser.equals(BrowserType.IE)) {
+            wd = new InternetExplorerDriver();
+            tlDriver.set(wd);
+        } else if (browser.equals(BrowserType.SAFARI)) {
+            wd = new SafariDriver();
+            tlDriver.set(wd);
+        }
+
+        System.out.println(((HasCapabilities) wd).getCapabilities());
+        wait = new WebDriverWait(wd, 0);
+
 //        wd.get(properties.getProperty("web.url"));
 //        login(properties.getProperty("web.username"), properties.getProperty("web.password"));
-//    }
+    }
 
     @AfterSuite(alwaysRun = true)
     public void tearDown() {
