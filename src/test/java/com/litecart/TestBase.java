@@ -20,36 +20,29 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.Properties;
-import java.util.ServiceLoader;
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
-    private final Properties properties;
     WebDriver wd;
-    WebDriverWait wait;
     private Logger logger = LoggerFactory.getLogger(LoginTest.class);
-
-    public TestBase(Properties properties) {
-        this.properties = properties;
-    }
 
     @BeforeSuite
     public void setUp() throws IOException {
-        //установлено default FIREFOX если значение не определено
-        String browser = System.getProperty("browser", BrowserType.FIREFOX);
+        Properties properties = new Properties();
+        String file = "env.properties";
 
-        String target = System.getProperty("target", "local");
-//        properties.load(new FileReader(new File("src/test/resources/%s.properties", target)));
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(file);
+        properties.load(inputStream);
+
+        String browser = System.getProperty("app.browser", BrowserType.FIREFOX);
 
         if (driver.get() != null) {
             wd = driver.get();
-            wait = new WebDriverWait(wd, 0);
             return;
         }
 
@@ -78,8 +71,8 @@ public class TestBase {
         }
 
         wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-//        wd.get(properties.getProperty("web.url"));
-//        login(properties.getProperty("web.username"), properties.getProperty("web.password"));
+        wd.get(properties.getProperty("web.url"));
+        login(properties.getProperty("web.username"), properties.getProperty("web.password"));
     }
 
     @AfterSuite(alwaysRun = true)

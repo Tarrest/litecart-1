@@ -1,0 +1,11 @@
+
+properties:
+
+1. забросить системное свойство через зборщика в запускаимаю java machine:
+task testContacts(type: Test) {
+    if (project.hasProperty('target')) {
+        systemProperty 'target', "${target}"
+    }
+}
+
+2.
