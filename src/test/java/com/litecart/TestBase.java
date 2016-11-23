@@ -12,7 +12,6 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
@@ -39,35 +38,43 @@ public class TestBase {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(file);
         properties.load(inputStream);
 
-        String browser = System.getProperty("app.browser", BrowserType.FIREFOX);
+        String browser = System.getProperty(properties.getProperty("app.browser"), BrowserType.FIREFOX);
 
         if (driver.get() != null) {
             wd = driver.get();
             return;
         }
 
-        if (browser.equals(BrowserType.FIREFOX)) {
-            DesiredCapabilities caps = new DesiredCapabilities();
-            caps.setCapability(FirefoxDriver.MARIONETTE, false);
-            wd = new FirefoxDriver(caps);
-            driver.set(wd);
-        } else if (browser.equals(BrowserType.CHROME)) {
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("start-fullscreen");
-            DesiredCapabilities caps = new DesiredCapabilities();
-            caps.setCapability(ChromeOptions.CAPABILITY, options);
-            wd = new ChromeDriver();
-            driver.set(wd);
-        } else if (browser.equals(BrowserType.IE)) {
-            wd = new InternetExplorerDriver();
-            driver.set(wd);
-        } else if (browser.equals(BrowserType.SAFARI)) {
-            SafariOptions options = new SafariOptions();
-            options.setUseCleanSession(true);
-            DesiredCapabilities caps = new DesiredCapabilities();
-            caps.setCapability(SafariOptions.CAPABILITY, options);
-            wd = new SafariDriver();
-            driver.set(wd);
+        switch (browser) {
+            case BrowserType.FIREFOX: {
+                DesiredCapabilities caps = new DesiredCapabilities();
+                caps.setCapability(FirefoxDriver.MARIONETTE, false);
+                wd = new FirefoxDriver(caps);
+                driver.set(wd);
+                break;
+            }
+            case BrowserType.CHROME: {
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("start-fullscreen");
+                DesiredCapabilities caps = new DesiredCapabilities();
+                caps.setCapability(ChromeOptions.CAPABILITY, options);
+                wd = new ChromeDriver();
+                driver.set(wd);
+                break;
+            }
+            case BrowserType.IE:
+                wd = new InternetExplorerDriver();
+                driver.set(wd);
+                break;
+            case BrowserType.SAFARI: {
+                SafariOptions options = new SafariOptions();
+                options.setUseCleanSession(true);
+                DesiredCapabilities caps = new DesiredCapabilities();
+                caps.setCapability(SafariOptions.CAPABILITY, options);
+                wd = new SafariDriver();
+                driver.set(wd);
+                break;
+            }
         }
 
         wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -109,7 +116,7 @@ public class TestBase {
         }
     }
 
-    void login(String username, String password) {
+    private void login(String username, String password) {
         type(By.name("username"), username);
         type(By.name("password"), password);
         click(By.name("login"));

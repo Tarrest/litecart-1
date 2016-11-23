@@ -17,6 +17,5 @@ public class LoginTest extends TestBase {
     public void logoutTest() {
         logout();
         Assert.assertEquals(wd.getCurrentUrl(), "http://localhost/litecart/admin/login.php");
-
     }
 }
