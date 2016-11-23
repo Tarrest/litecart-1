@@ -3,6 +3,8 @@ package com.litecart;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.Properties;
+
 /**
  * Created by pshynin on 11/17/16.
  */
