@@ -14,6 +14,7 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -28,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 public class TestBase {
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
     WebDriver wd;
-    private Logger logger = LoggerFactory.getLogger(LoginTest.class);
+    private Logger logger = LoggerFactory.getLogger(LoginLogoutTest.class);
 
     @BeforeSuite
     public void setUp() throws IOException {
@@ -38,7 +39,7 @@ public class TestBase {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(file);
         properties.load(inputStream);
 
-        String browser = System.getProperty(properties.getProperty("app.browser"), BrowserType.FIREFOX);
+        String browser = System.getProperty(properties.getProperty("app.browser").toUpperCase(), BrowserType.FIREFOX);
 
         if (driver.get() != null) {
             wd = driver.get();
@@ -101,7 +102,7 @@ public class TestBase {
         logger.info("Stop test " + m.getName());
     }
 
-    private void click(By locator) {
+    void click(By locator) {
         wd.findElement(locator).click();
     }
 
@@ -113,6 +114,15 @@ public class TestBase {
                 wd.findElement(locator).clear();
                 wd.findElement(locator).sendKeys(text);
             }
+        }
+    }
+
+    void verifyHeader(By locator1, By locator2) {
+        String text = wd.findElement(locator1).getText();
+        click(locator1);
+        if (text != null) {
+            String header = wd.findElement(locator2).getText();
+            Assert.assertEquals(header, text);
         }
     }
 
