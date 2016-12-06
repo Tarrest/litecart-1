@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Created by pshynin on 11/17/16.
+ */
 public class CrossBrowser {
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
     private WebDriver wd;

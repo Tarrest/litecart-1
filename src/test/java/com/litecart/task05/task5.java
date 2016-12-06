@@ -10,6 +10,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+/**
+ * Created by pshynin on 11/17/16.
+ */
 public class task5 {
     private static final int SLEEP_PERIOD = 1000;
     private static final int TIMEOUT = 30000;

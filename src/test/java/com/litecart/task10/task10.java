@@ -1,45 +1,15 @@
 package com.litecart.task10;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 public class task10 {
-    private static final int SLEEP_PERIOD = 1000;
-    private static final int TIMEOUT = 30000;
-    private static final String SEARCH_STR = "selenium";
-    private WebDriver driver;
-    private WebDriverWait wait;
 
-    @Before
-    public void beforeTest() {
-        this.driver = new FirefoxDriver();
-        this.wait = new WebDriverWait(this.driver, task10.TIMEOUT,
-                task10.SLEEP_PERIOD);
+    public int fib(int i) {
+        for (i = 0; i <= 100; i++) {
+            int fibbonacci = (fib(i - 1) + fib(i - 2));
+        }
+        return Integer.parseInt(null);
     }
 
-    @Test
-    public void runTest() {
-        this.driver.get("http://google.com");
-        this.driver.findElement(By.id("lst-ib"))
-                .sendKeys(task10.SEARCH_STR);
-        this.driver.findElement(By.name("btnG")).click();
-        By result = By.className("g");
-        this.wait.until(ExpectedConditions.presenceOfElementLocated(result));
-        Assert.assertTrue("Search results do not contain search string",
-                this.driver.findElement(result).getText()
-                        .contains(task10.SEARCH_STR));
-    }
+    public static void fib(String[] args) {
 
-    @After
-    public void afterTest() {
-        this.driver.quit();
     }
-
 }

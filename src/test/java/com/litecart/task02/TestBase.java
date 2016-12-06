@@ -18,6 +18,9 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Created by pshynin on 11/17/16.
+ */
 public class TestBase {
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
     protected WebDriver wd;

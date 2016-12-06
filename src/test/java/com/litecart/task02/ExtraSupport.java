@@ -5,12 +5,15 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+/**
+ * Created by pshynin on 11/17/16.
+ */
 public class ExtraSupport {
-    private WebDriver wd;
+    private WebDriver driver;
     private WebDriverWait wait;
 
     protected void click(By locator) {
-        WebElement element = wd.findElement(locator);
+        WebElement element = this.driver.findElement(locator);
         if (element.isDisplayed()) {
             element.click();
         }
@@ -19,17 +22,17 @@ public class ExtraSupport {
     private void type(By locator, String text) {
         click(locator);
         if (text != null) {
-            String existingText = wd.findElement(locator).getAttribute("value");
+            String existingText = this.driver.findElement(locator).getAttribute("value");
             if (!text.equals(existingText)) {
-                wd.findElement(locator).clear();
-                wd.findElement(locator).sendKeys(text);
+                this.driver.findElement(locator).clear();
+                this.driver.findElement(locator).sendKeys(text);
             }
         }
     }
 
     private void type2(final By locator, final String text) {
         this.wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        this.wd.findElement(locator).sendKeys(text);
+        this.driver.findElement(locator).sendKeys(text);
     }
 
     protected void login(String username, String password) {
@@ -40,7 +43,7 @@ public class ExtraSupport {
 
     public boolean isAlertPresent() {
         try {
-            wd.switchTo().alert();
+            this.driver.switchTo().alert();
             return true;
         } catch (NoAlertPresentException e) {
             return false;
@@ -49,11 +52,15 @@ public class ExtraSupport {
 
     public boolean isElementPresent(By locator) {
         try {
-            wd.findElement(locator);
+            this.driver.findElement(locator);
             return true;
         } catch (NoSuchElementException ex) {
             return false;
         }
+    }
+
+    public boolean areElementsPresent(WebDriver driver, By locator) {
+        return this.driver.findElements(locator).size() > 0;
     }
 
     private void waitForAjax() {
