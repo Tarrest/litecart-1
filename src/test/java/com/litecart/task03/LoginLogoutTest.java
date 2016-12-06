@@ -1,6 +1,6 @@
-package com.litecart;
+package com.litecart.task03;
 
-import org.openqa.selenium.By;
+import com.litecart.task02.TestBase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -9,14 +9,11 @@ import org.testng.annotations.Test;
  */
 public class LoginLogoutTest extends TestBase {
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void loginTest() {
-        Assert.assertEquals(wd.getCurrentUrl(), "http://localhost/litecart/admin/");
-    }
-
-    @Test(enabled = false)
-    public void logoutTest() {
-        logout();
+        // logout();
         Assert.assertEquals(wd.getCurrentUrl(), "http://localhost/litecart/admin/login.php");
+        // login("admin", "admin");
+        Assert.assertEquals(wd.getCurrentUrl(), "http://localhost/litecart/admin/");
     }
 }

@@ -1,0 +1,1 @@
+StateElementReference Exception - DOM always changing, if element found and then destroyed by js or renewed, and then try to ckick
