@@ -1,9 +1,13 @@
 package com.litecart.task02;
 
+import com.google.common.base.Predicate;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ExtraSupport {
     private WebDriver wd;
+    private WebDriverWait wait;
 
     protected void click(By locator) {
         WebElement element = wd.findElement(locator);
@@ -21,6 +25,11 @@ public class ExtraSupport {
                 wd.findElement(locator).sendKeys(text);
             }
         }
+    }
+
+    private void type2(final By locator, final String text) {
+        this.wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        this.wd.findElement(locator).sendKeys(text);
     }
 
     protected void login(String username, String password) {
@@ -45,5 +54,16 @@ public class ExtraSupport {
         } catch (NoSuchElementException ex) {
             return false;
         }
+    }
+
+    private void waitForAjax() {
+        this.wait.until(new Predicate<WebDriver>() {
+
+            @Override
+            public boolean apply(final WebDriver input) {
+                return (Boolean) ((JavascriptExecutor) input)
+                        .executeScript("return jQuery.active == 0");
+            }
+        });
     }
 }

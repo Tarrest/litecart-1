@@ -19,19 +19,14 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
-    protected static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
+    private static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
     protected WebDriver wd;
     protected WebDriverWait wait;
 
     @BeforeSuite
     protected void setUp() throws IOException {
-        Properties properties = new Properties();
-        String file = "env.properties";
 
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(file);
-        properties.load(inputStream);
-
-        String browser = System.getProperty(properties.getProperty("app.browser").toUpperCase(), BrowserType.FIREFOX);
+        String browser = BrowserType.FIREFOX;
 
         if (driver.get() != null) {
             wd = driver.get();
@@ -71,7 +66,6 @@ public class TestBase {
         }
 
         wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        ;
     }
 
     @AfterSuite(alwaysRun = true)

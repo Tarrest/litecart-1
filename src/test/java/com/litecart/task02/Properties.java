@@ -1,5 +1,6 @@
 package com.litecart.task02;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,9 +11,8 @@ import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
 public class Properties {
-    protected static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
-    protected WebDriver wd;
     protected WebDriverWait wait;
+    private WebDriver wd;
 
     @BeforeSuite
     protected void setUp() throws IOException {
@@ -24,13 +24,14 @@ public class Properties {
 
         String browser = System.getProperty(properties.getProperty("app.browser").toUpperCase(), BrowserType.FIREFOX);
 
-        if (driver.get() != null) {
-            wd = driver.get();
-            return;
-        }
-
         wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.url"));
-        // login(properties.getProperty("web.username"), properties.getProperty("web.password"));
+        wd.findElement(By.name("username")).click();
+        wd.findElement(By.name("username")).clear();
+        wd.findElement(By.name("username")).sendKeys(properties.getProperty("web.username"));
+        wd.findElement(By.name("password")).click();
+        wd.findElement(By.name("password")).clear();
+        wd.findElement(By.name("password")).sendKeys(properties.getProperty("web.password"));
+        this.wd.findElement(By.name("login")).click();
     }
 }

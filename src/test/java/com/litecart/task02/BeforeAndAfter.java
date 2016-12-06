@@ -1,43 +1,43 @@
 package com.litecart.task02;
 
 import com.litecart.task03.LoginLogoutTest;
+import com.litecart.task03.LoginTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class BeforeAndAfter {
     private static final int SLEEP_PERIOD = 1000;
     private static final int TIMEOUT = 30000;
-    private static final String SEARCH_STR = "selenium";
-    private WebDriver driver;
-    private WebDriverWait wait;
+    private WebDriver wd;
     private Logger logger = LoggerFactory.getLogger(LoginLogoutTest.class);
 
 
     @BeforeTest
     public void beforeTest() {
-        this.driver = new FirefoxDriver();
-        this.wait = new WebDriverWait(this.driver, BeforeAndAfter.TIMEOUT,
+        this.wd = new FirefoxDriver();
+        WebDriverWait wait = new WebDriverWait(this.wd, BeforeAndAfter.TIMEOUT,
                 BeforeAndAfter.SLEEP_PERIOD);
     }
 
     @AfterTest
     public void afterTest() {
-        this.driver.quit();
-    }
-
-    public void click(By locator) {
-        WebElement element = driver.findElement(locator);
-        if (element.isDisplayed()) {
-            element.click();
-        }
+        this.wd.quit();
     }
 
     @BeforeMethod
@@ -50,12 +50,26 @@ public class BeforeAndAfter {
         logger.info("Stop test " + m.getName());
     }
 
+    @BeforeSuite
+    public void setUp() {
+            String browser = BrowserType.FIREFOX;
+
+            if (Objects.equals(browser, BrowserType.FIREFOX)) {
+                wd = new FirefoxDriver();
+            } else if (Objects.equals(browser, BrowserType.CHROME)) {
+                wd = new ChromeDriver();
+            } else if (Objects.equals(browser, BrowserType.SAFARI)) {
+                wd = new SafariDriver();
+            }
+            wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        }
+
     @AfterSuite(alwaysRun = true)
     public void tearDown() {
         Runtime.getRuntime().addShutdownHook(
                 new Thread(() -> {
-                    driver.quit();
-                    driver = null;
+                    wd.quit();
+                    wd = null;
                 }));
     }
 

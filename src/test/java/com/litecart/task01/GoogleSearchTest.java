@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -40,14 +39,11 @@ public class GoogleSearchTest {
 
     @After
     public void afterTest() {
-        this.driver.quit();
-    }
-
-    public void click(By locator) {
-        WebElement element = driver.findElement(locator);
-        if (element.isDisplayed()) {
-            element.click();
-        }
+        Runtime.getRuntime().addShutdownHook(
+                new Thread(() -> {
+                    driver.quit();
+                    driver = null;
+                }));
     }
 
 }

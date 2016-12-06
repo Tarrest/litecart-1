@@ -1,4 +1,4 @@
-package com.litecart.task05;
+package com.litecart.task08;
 
 import com.litecart.task02.TestBase;
 import org.openqa.selenium.By;
