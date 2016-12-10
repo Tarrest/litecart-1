@@ -19,7 +19,7 @@ public class ExtraSupport {
         }
     }
 
-    private void type(By locator, String text) {
+    private void type1(By locator, String text) {
         click(locator);
         if (text != null) {
             String existingText = this.driver.findElement(locator).getAttribute("value");
@@ -36,8 +36,8 @@ public class ExtraSupport {
     }
 
     protected void login(String username, String password) {
-        type(By.name("username"), username);
-        type(By.name("password"), password);
+        type1(By.name("username"), username);
+        type1(By.name("password"), password);
         click(By.name("login"));
     }
 

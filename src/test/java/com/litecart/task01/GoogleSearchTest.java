@@ -17,6 +17,7 @@ public class GoogleSearchTest {
     private static final int TIMEOUT = 30000;
     private static final String SEARCH_STR = "selenium";
     private static final String URL = "http://google.com";
+
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -25,15 +26,6 @@ public class GoogleSearchTest {
         this.driver = new FirefoxDriver();
         this.wait = new WebDriverWait(this.driver, GoogleSearchTest.TIMEOUT,
                 GoogleSearchTest.SLEEP_PERIOD);
-    }
-
-    @AfterTest
-    public void afterTest() {
-        Runtime.getRuntime().addShutdownHook(
-                new Thread(() -> {
-                    driver.quit();
-                    driver = null;
-                }));
     }
 
     @Test(enabled = true)
@@ -63,5 +55,14 @@ public class GoogleSearchTest {
         } catch (NoSuchElementException ex) {
             return false;
         }
+    }
+
+    @AfterTest
+    public void afterTest() {
+        Runtime.getRuntime().addShutdownHook(
+                new Thread(() -> {
+                    driver.quit();
+                    driver = null;
+                }));
     }
 }

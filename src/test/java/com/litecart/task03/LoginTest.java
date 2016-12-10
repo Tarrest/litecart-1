@@ -23,11 +23,11 @@ public class LoginTest {
     private static final long SLEEP_MS = 500L;
     private static final String URL = "http://localhost/litecart/admin/";
 
-    @Parameterized.Parameter(1)
-    public String username = "admin";
+    @Parameterized.Parameter(0)
+    private String username = "admin";
 
-    @Parameterized.Parameter(2)
-    public String password = "admin";
+    @Parameterized.Parameter(1)
+    private String password = "admin";
 
     public WebDriver driver;
     public WebDriverWait wait;
