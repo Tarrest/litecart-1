@@ -1,138 +1,83 @@
 package com.litecart.task07;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.List;
 
-import static java.awt.SystemColor.text;
+import static org.testng.Assert.assertTrue;
 
 /**
- * Created by pshynin on 11/26/16.
+ * Created by pshynin on 12/9/16.
  */
 public class AdminPageTest {
-    private static final int SLEEP_PERIOD = 1000;
-    private static final int TIMEOUT = 30000;
-    private static final String URL = "http://localhost/litecart/admin/login.php";
-    private static final String MENU_ITEM = "ul#box-apps-menu li:nth-child({0})";
-    private static final String SUB_MENU_ITEM = "li:nth-child({0})";
+    private static final String URL = "http://localhost/litecart/admin";
+    private static final String MAIN_MENU = "span.name";
+    private static final String SUB_MENU = "li:nth-child({0})";
     private static final String HEADER = "td#content h1";
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "admin";
 
     private WebDriver driver;
     private WebDriverWait wait;
-    private Actions actions;
-
 
     @BeforeTest
     public void beforeTest() {
         this.driver = new FirefoxDriver();
-        this.wait = new WebDriverWait(this.driver, AdminPageTest.TIMEOUT
-                , AdminPageTest.SLEEP_PERIOD);
+        this.wait = new WebDriverWait(this.driver, 10L);
+        this.driver.get(URL);
+        this.login(USERNAME, PASSWORD);
     }
 
     @Test(enabled = true)
-    public void testAdminPage() {
-        this.driver.get(URL);
-        login(USERNAME, PASSWORD);
+    public void Test1() {
+        List<WebElement> elements = this.driver.findElements(By.cssSelector(MAIN_MENU));
+        Iterator<WebElement> element = elements.iterator();
 
-//        Собираешь лист элементов с одинаковым локатором и по нему циклом.
-        //от Первого Листа берёшь количество итераций - длину списка.
+        while (element.hasNext()) {
+            List<WebElement> mainMenu = this.driver.findElements(By.cssSelector(MAIN_MENU));
+            Iterator<WebElement> mainMenuElement = mainMenu.iterator();
+            mainMenuElement.next().click();
 
-//        Внутри иф условие, если есть вложенное меню, то опять лист, и по нему вторым циклом.
-        //        Второй Лист заводишь в цикл. Потому что его надо обновлять каждый раз.
-//        В этом же цикле проверка заголовка.
+            if (isElementPresent(By.cssSelector(SUB_MENU))) {
+                List<WebElement> subMenuElements = this.driver.findElements(By.cssSelector(SUB_MENU));
+                Iterator<WebElement> subMenuElement = subMenuElements.iterator();
+                subMenuElement.next().click();
 
-
-//        List<WebElement> elements = driver.findElements(By.cssSelector(MENU_ITEM));
-//        int s = elements.size();
-//        for(int i=1;i<=s;i++){
-//            By.cssSelector(MessageFormat
-//                            .format(AdminPageTest.MENU_ITEM, mainIndex++)
-//            elements = driver.findElements(By.xpath("//div[@id='...']/ul/li"));
-//            elements.get(i).click();
-//        }
-//        for (WebElement element : elements) {
-//            if (element.isDisplayed()) {
-//                element.click();
-//            }
-//        }
-
-//        List<WebElement> menu = driver.findElements(By.cssSelector(SUB_MENU_ITEM));
-//        for (WebElement option : menu) {
-//            WebElement header = driver.findElement(By.cssSelector(HEADER));
-//            Assert.assertTrue(header.contains(text));
-//            driver.quit();
-//        }
-
-//        List<WebElement> mainMenu = driver.findElements(By.cssSelector(MENU_ITEM));
-//        Iterator<WebElement> main = mainMenu.iterator();
-//        while(main.hasNext()) {
-//            if ()
-//            List<WebElement> subMenu = driver.findElements(By.cssSelector(SUB_MENU_ITEM));
-//            Iterator<WebElement> sub = subMenu.iterator();
-//            sub.next().click();
-//        }
+                assertTrue(isElementPresent(By.cssSelector(HEADER)));
+            }
+        }
     }
 
-    @Test
-    public void runTest() {
-        this.driver.get(AdminPageTest.URL);
-        this.login("admin", "admin");
-        int mainIndex = 1;
-        boolean bMainMenuItemPresent = true;
-        while (bMainMenuItemPresent) {
-            // Searching main menu items by index, until none found.
-            By itemBy = By.cssSelector(MessageFormat
-                    .format(AdminPageTest.MENU_ITEM, mainIndex++));
- //           bMainMenuItemPresent = this.actions.findElemens(itemBy);
+    @Test(enabled = true)
+    public void Test2() {
+        List<WebElement> mainMenu = this.driver.findElements(By.cssSelector(MAIN_MENU));
+        for (WebElement mainElement : mainMenu) {
+            mainElement.click();
 
-            if (bMainMenuItemPresent) {
-                // Click on main menu item.
-                click(itemBy);
-                boolean bSubMenuItemPresent = true;
-                int subIndex = 1;
+            if (isElementPresent(By.className(SUB_MENU))) {
+                List<WebElement> subMenu = this.driver.findElements(By.className(SUB_MENU));
+                for (WebElement subElement : subMenu) {
+                    subElement.click();
 
-                while (bSubMenuItemPresent) {
-                    // Searching for sub menu items, if any.
-                    By subMenuItem = By.cssSelector(MessageFormat.format(
-                            AdminPageTest.SUB_MENU_ITEM,
-                            subIndex++));
-                    WebElement mainMenuItem = this.driver.findElement(itemBy);
-//                    bSubMenuItemPresent = this.actions.findSubElement(mainMenuItem,
-//                            subMenuItem);
-
-                    if (bSubMenuItemPresent) {
-                        // if found - click on it and verify presence of header.
-                        mainMenuItem.findElement(subMenuItem).click();
-//                        Assert.assertTrue("Header not found!",
-//                                this.actions.findElemens(By.cssSelector(
-//                                        AdminPageTest.HEADER)));
-                    }
+                    assertTrue(isElementPresent(By.cssSelector(HEADER)));
                 }
             }
         }
     }
 
-    @AfterTest(alwaysRun = true)
-    public void tearDown() {
-        Runtime.getRuntime().addShutdownHook(
-                new Thread(() -> {
-                    driver.quit();
-                    driver = null;
-                }));
+    @AfterTest
+    public void afterTest() {
+        this.driver.quit();
     }
 
     private void click(By locator) {
@@ -142,7 +87,7 @@ public class AdminPageTest {
         }
     }
 
-    private void type(final By locator, final String text) {
+    private void type(By locator, String text) {
         this.wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         this.driver.findElement(locator).sendKeys(text);
     }
@@ -150,6 +95,15 @@ public class AdminPageTest {
     private void login(String username, String password) {
         type(By.name("username"), username);
         type(By.name("password"), password);
-        this.driver.findElement(By.name("login")).click();
+        click(By.name("login"));
+    }
+
+    private boolean isElementPresent(By locator) {
+        try {
+            this.driver.findElement(locator);
+            return true;
+        } catch (NoSuchElementException ex) {
+            return false;
+        }
     }
 }
