@@ -7,7 +7,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 /**
  * Created by pshynin on 11/17/16.
@@ -37,15 +39,22 @@ public class GoogleSearchTest {
         By result = By.className("g");
         this.wait.until(ExpectedConditions.presenceOfElementLocated(result));
         Assert.assertTrue(this.driver.findElement(result).getText()
-                                .contains(GoogleSearchTest.SEARCH_STR),
+                        .contains(GoogleSearchTest.SEARCH_STR),
                 "Search results do not contain search string");
     }
 
     @Test(enabled = true)
     public void test2() {
-        driver.navigate().to(URL);
-        driver.findElement(By.name("q")).sendKeys("webdriver");
+        this.driver.navigate().to(URL);
+        this.driver.findElement(By.name("q")).sendKeys("webdriver");
         Assert.assertFalse(isElementPresent(By.name("XXX")));
+    }
+
+    @Test(enabled = true)
+    public void test3() {
+        this.driver.navigate().to("http://www.google.com");
+        this.driver.findElement(By.name("q")).sendKeys("webdriver");
+        Assert.assertFalse(this.isElementPresent(By.xpath("//div[")));
     }
 
     private boolean isElementPresent(By locator) {
