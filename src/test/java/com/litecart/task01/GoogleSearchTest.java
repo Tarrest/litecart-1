@@ -29,7 +29,7 @@ public class GoogleSearchTest {
     }
 
     @Test(enabled = true)
-    public void FirstTest() {
+    public void test1() {
         this.driver.get(URL);
         this.driver.findElement(By.id("lst-ib"))
                 .sendKeys(GoogleSearchTest.SEARCH_STR);
@@ -42,7 +42,7 @@ public class GoogleSearchTest {
     }
 
     @Test(enabled = true)
-    public void SecondTest() {
+    public void test2() {
         driver.navigate().to(URL);
         driver.findElement(By.name("q")).sendKeys("webdriver");
         Assert.assertFalse(isElementPresent(By.name("XXX")));
@@ -57,7 +57,7 @@ public class GoogleSearchTest {
         }
     }
 
-    @AfterTest
+    @AfterTest(alwaysRun = true)
     public void afterTest() {
         Runtime.getRuntime().addShutdownHook(
                 new Thread(() -> {

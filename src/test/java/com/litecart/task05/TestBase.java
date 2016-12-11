@@ -17,12 +17,12 @@ import java.io.IOException;
 /**
  * Created by pshynin on 11/17/16.
  */
-public class BaseClass {
+public class TestBase {
     private static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<WebDriver>();
     protected WebDriver driver;
     protected WebDriverWait wait;
 
-    public boolean isElementPresent(By locator) {
+    boolean isElementPresent(By locator) {
         try {
             driver.findElement(locator);
             return true;
@@ -33,12 +33,12 @@ public class BaseClass {
         }
     }
 
-    public boolean areElementsPresent(By locator) {
+    protected boolean areElementsPresent(By locator) {
         return driver.findElements(locator).size() > 0;
     }
 
     @BeforeSuite
-    protected void setUp() throws IOException {
+    private void setUp() throws IOException {
 
         String browser = BrowserType.FIREFOX;
 
@@ -57,12 +57,11 @@ public class BaseClass {
 
 
     @AfterSuite(alwaysRun = true)
-    public void tearDown() {
+    private void tearDown() {
         Runtime.getRuntime().addShutdownHook(
                 new Thread(() -> {
                     driver.quit();
                     driver = null;
                 }));
     }
-
 }
