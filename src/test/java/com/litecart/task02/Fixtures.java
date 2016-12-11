@@ -1,6 +1,5 @@
 package com.litecart.task02;
 
-import com.litecart.task03.DriverFactory;
 import com.litecart.task03.LoginLogoutTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
