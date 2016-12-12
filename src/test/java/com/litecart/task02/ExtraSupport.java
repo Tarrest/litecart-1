@@ -50,8 +50,34 @@ public class ExtraSupport {
         }
     }
 
-    public boolean isElementPresent(By locator) {
+    public boolean isElementPresent1(By locator) {
         try {
+            this.driver.findElement(locator);
+            return true;
+        } catch (NoSuchElementException ex) {
+            return false;
+        }
+    }
+
+    public boolean isElementPresent2(WebDriver driver, By locator) {
+        return this.driver.findElements(locator).size() > 0;
+    }
+
+    public boolean isElementPresent3(By locator) {
+        try {
+            this.driver.findElement(locator);
+            return true;
+        } catch (InvalidSelectorException ex) {
+            throw ex;
+        } catch (NoSuchElementException ex) {
+            return false;
+        }
+    }
+
+    public boolean isElementPresent4(By locator) {
+//        wait = new WebDriverWait(driver, 10);
+        try {
+//            wait.until(WebDriver d); -> d.findElement(locator);
             this.driver.findElement(locator);
             return true;
         } catch (NoSuchElementException ex) {

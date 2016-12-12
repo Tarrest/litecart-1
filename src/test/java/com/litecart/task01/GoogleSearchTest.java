@@ -30,6 +30,15 @@ public class GoogleSearchTest {
                 GoogleSearchTest.SLEEP_PERIOD);
     }
 
+    @AfterTest(alwaysRun = true)
+    public void afterTest() {
+        Runtime.getRuntime().addShutdownHook(
+                new Thread(() -> {
+                    driver.quit();
+                    driver = null;
+                }));
+    }
+
     @Test(enabled = true)
     public void test1() {
         this.driver.get(URL);
@@ -64,14 +73,5 @@ public class GoogleSearchTest {
         } catch (NoSuchElementException ex) {
             return false;
         }
-    }
-
-    @AfterTest(alwaysRun = true)
-    public void afterTest() {
-        Runtime.getRuntime().addShutdownHook(
-                new Thread(() -> {
-                    driver.quit();
-                    driver = null;
-                }));
     }
 }

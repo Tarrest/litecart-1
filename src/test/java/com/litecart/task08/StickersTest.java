@@ -30,16 +30,16 @@ public class StickersTest {
         this.driver.get(URL);
     }
 
+    @AfterTest(alwaysRun = true)
+    public void afterTest() {
+        this.driver.quit();
+    }
+
     @Test(enabled = true)
     public void testStickers() {
         List<WebElement> products = driver.findElements(By.cssSelector(PRODUCT));
         for (WebElement product : products) {
             assertEquals(product.findElements(By.cssSelector(STICKER)).size(), 1);
         }
-    }
-
-    @AfterTest(alwaysRun = true)
-    public void afterTest() {
-        this.driver.quit();
     }
 }

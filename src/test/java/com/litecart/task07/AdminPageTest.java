@@ -38,6 +38,18 @@ public class AdminPageTest {
         this.login(USERNAME, PASSWORD);
     }
 
+    @AfterTest(alwaysRun = true)
+    public void afterTest() {
+        this.driver.quit();
+    }
+
+    private void click(By locator) {
+        WebElement element = this.driver.findElement(locator);
+        if (element.isDisplayed()) {
+            element.click();
+        }
+    }
+
     @Test(enabled = false)
     public void Test1() {
         List<WebElement> elements = this.driver.findElements(By.cssSelector(MAIN_MENU));
@@ -74,18 +86,6 @@ public class AdminPageTest {
                     assertTrue(isElementPresent(By.cssSelector(HEADER)));
                 }
             }
-        }
-    }
-
-    @AfterTest(alwaysRun = true)
-    public void afterTest() {
-        this.driver.quit();
-    }
-
-    private void click(By locator) {
-        WebElement element = this.driver.findElement(locator);
-        if (element.isDisplayed()) {
-            element.click();
         }
     }
 
