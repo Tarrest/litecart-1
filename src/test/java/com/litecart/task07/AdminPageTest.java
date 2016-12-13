@@ -21,11 +21,12 @@ import static org.testng.Assert.assertTrue;
  */
 public class AdminPageTest {
     private static final String URL = "http://localhost/litecart/admin";
+    private static final String USERNAME = "admin";
+    private static final String PASSWORD = "admin";
+
     private static final String MAIN_MENU = "span.name";
     private static final String SUB_MENU = "li:nth-child({0})";
     private static final String HEADER = "td#content h1";
-    private static final String USERNAME = "admin";
-    private static final String PASSWORD = "admin";
 
     private WebDriver driver;
     private WebDriverWait wait;
