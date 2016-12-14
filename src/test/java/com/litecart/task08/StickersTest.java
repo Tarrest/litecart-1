@@ -20,7 +20,6 @@ public class StickersTest {
     private static final String URL = "http://localhost/litecart";
     private static final String PRODUCT = "li.product";
     private static final String STICKER = "div.sticker";
-    private String string ;
 
     private WebDriver driver;
 
