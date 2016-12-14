@@ -12,7 +12,7 @@ public class ExtraSupport {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    protected void click(By locator) {
+    private void click(By locator) {
         WebElement element = this.driver.findElement(locator);
         if (element.isDisplayed()) {
             element.click();
@@ -32,6 +32,7 @@ public class ExtraSupport {
 
     private void type2(final By locator, final String text) {
         this.wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        this.driver.findElement(locator).clear();
         this.driver.findElement(locator).sendKeys(text);
     }
 
