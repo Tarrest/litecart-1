@@ -19,7 +19,7 @@ import static org.testng.Assert.assertEquals;
 /**
  * Created by pshynin on 12/16/16.
  */
-public class Countries {
+public class CountriesTest {
     private static final int SLEEP_PERIOD = 1000;
     private static final int TIMEOUT = 30000;
     private static final String URL_APP = "http://localhost/litecart/admin";
@@ -37,8 +37,8 @@ public class Countries {
     @BeforeTest
     public void beforeTest() {
         this.driver = new FirefoxDriver();
-        this.wait = new WebDriverWait(this.driver, Countries.TIMEOUT,
-                Countries.SLEEP_PERIOD);
+        this.wait = new WebDriverWait(this.driver, CountriesTest.TIMEOUT,
+                CountriesTest.SLEEP_PERIOD);
         this.driver.get(URL_APP);
         login(USERNAME, PASSWORD);
     }

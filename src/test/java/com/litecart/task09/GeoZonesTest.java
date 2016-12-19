@@ -19,7 +19,7 @@ import static org.testng.Assert.assertEquals;
 /**
  * Created by pshynin on 12/16/16.
  */
-public class GeoZones {
+public class GeoZonesTest {
     private static final int SLEEP_PERIOD = 1000;
     private static final int TIMEOUT = 30000;
     private static final String URL_APP = "http://localhost/litecart/admin";
@@ -36,8 +36,8 @@ public class GeoZones {
     @BeforeTest
     public void beforeTest() {
         this.driver = new FirefoxDriver();
-        this.wait = new WebDriverWait(this.driver, GeoZones.TIMEOUT,
-                GeoZones.SLEEP_PERIOD);
+        this.wait = new WebDriverWait(this.driver, GeoZonesTest.TIMEOUT,
+                GeoZonesTest.SLEEP_PERIOD);
         this.driver.get(URL_APP);
         login(USERNAME, PASSWORD);
     }
