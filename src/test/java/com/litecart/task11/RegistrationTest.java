@@ -245,25 +245,5 @@ public class RegistrationTest {
             this.confirmPassword = confirmPassword;
             return this;
         }
-
-        @Override
-        public String toString() {
-            return "RegistrationData{" +
-                    "taxID='" + taxID + '\'' +
-                    ", Company='" + company + '\'' +
-                    ", firstname='" + firstname + '\'' +
-                    ", lastname='" + lastname + '\'' +
-                    ", address1='" + address1 + '\'' +
-                    ", address2='" + address2 + '\'' +
-                    ", postcode='" + postcode + '\'' +
-                    ", city='" + city + '\'' +
-                    ", country='" + country + '\'' +
-                    ", state='" + state + '\'' +
-                    ", email='" + email + '\'' +
-                    ", phone='" + phone + '\'' +
-                    ", desiredPassword='" + desiredPassword + '\'' +
-                    ", confirmPassword='" + confirmPassword + '\'' +
-                    '}';
-        }
     }
 }
