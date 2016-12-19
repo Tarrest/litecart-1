@@ -1,14 +1,11 @@
 package com.litecart.Task12;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -16,7 +13,6 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 /**
  * Created by pshynin on 12/18/16.
@@ -24,7 +20,7 @@ import static org.testng.Assert.assertTrue;
 public class NewProductTest {
     private static final int SLEEP_PERIOD = 1000;
     private static final int TIMEOUT = 30000;
-    private static final String URL = "http://localhost/litecart";
+    private static final String URL = "http://localhost/litecart/admin";
 
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "admin";
@@ -38,6 +34,7 @@ public class NewProductTest {
         this.driver = new FirefoxDriver();
         this.wait = new WebDriverWait(this.driver, NewProductTest.TIMEOUT,
                 NewProductTest.SLEEP_PERIOD);
+        this.driver.get(URL);
         login(USERNAME, PASSWORD);
     }
 
@@ -48,7 +45,6 @@ public class NewProductTest {
 
     @Test(enabled = true)
     public void testNewProduct() {
-        this.driver.get(URL);
         initProductAdd();
         fillGeneralForm(new ProductData().withCode("codeTest1")
                 .withName(PRODUCT_NAME).withDescription("descriptionTest1"));
@@ -105,19 +101,10 @@ public class NewProductTest {
         submitProductAdd();
     }
 
-    private boolean isElementPresent(By locator) {
-        try {
-            this.driver.findElement(locator);
-            return true;
-        } catch (NoSuchElementException ex) {
-            return false;
-        }
-    }
-
-    private void login(String emailaddress, String password) {
-        type(By.cssSelector("[name='email']"), emailaddress);
-        type(By.cssSelector("[name='password']"), password);
-        click(By.cssSelector("[name='login']"));
+    private void login(String username, String password) {
+        type(By.name("username"), username);
+        type(By.name("password"), password);
+        click(By.name("login"));
     }
 
     private void click(By locator) {
@@ -131,11 +118,6 @@ public class NewProductTest {
         this.wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         this.driver.findElement(locator).clear();
         this.driver.findElement(locator).sendKeys(text);
-    }
-
-    private void select(By locator, String text) {
-        Select element = new Select(driver.findElement(locator));
-        element.selectByVisibleText(text);
     }
 
     private class ProductData {
