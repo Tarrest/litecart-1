@@ -45,7 +45,7 @@ public class CampaignsTest {
         mainPage.campaignPrice = mainPageElement.findElement(By.cssSelector(CAMPAIN_PRICE)).getText();
         mainPage.regularPrice = mainPageElement.findElement(By.cssSelector(REGULAR_PRICE)).getText();
 
-        click((By) mainPageElement);
+        mainPageElement.click();
 
         ProductData productPage = new ProductData();
         WebElement productPageElement = driver.findElement(By.cssSelector(PRODUCT_DETAILES));
@@ -54,13 +54,6 @@ public class CampaignsTest {
         productPage.regularPrice = productPageElement.findElement(By.cssSelector(REGULAR_PRICE)).getText();
 
         assertEquals(mainPage, productPage);
-    }
-
-    private void click(By locator) {
-        WebElement element = this.driver.findElement(locator);
-        if (element.isDisplayed()) {
-            element.click();
-        }
     }
 
     private class ProductData {
