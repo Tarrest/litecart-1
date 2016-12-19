@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -17,6 +18,9 @@ public class RegistrationTest {
     private static final int SLEEP_PERIOD = 1000;
     private static final int TIMEOUT = 30000;
     private static final String URL = "http://localhost/litecart";
+
+    private static final String EMAIL_ADDRESS = "email@Test1";
+    private static final String PASSWORD = "passwordTest1";
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -37,59 +41,49 @@ public class RegistrationTest {
     public void testRegistration() {
         this.driver.get(URL);
         initRegistration();
-        fillRegistrationForm(new RegistrationData().withFirstname("firstname").withLastname("lastname"));
+        fillRegistrationForm(new RegistrationData().withTaxID("1234").withCompany("companyTest1")
+                .withFirstname("firstnameTest1").withLastname("lastnameTest1").withAddress1("addressTest1")
+                .withAddress2("addressTest2").withPostcode("02000").withCity("Boston").withCountry("United States")
+                .withState("Massachusets").withEmail(EMAIL_ADDRESS).withPhone("123-123-12-12")
+                .withDesiredPassword(PASSWORD).withConfirmPassword(PASSWORD));
         submitRegistration();
         logout();
-        login();
-
+        login(EMAIL_ADDRESS, PASSWORD);
     }
-
-//    Сделайте сценарий для регистрации нового пользователя в учебном приложении litecart
-//    (не в админке, а в клиентской части магазина).
-//    Сценарий должен состоять из следующих частей:
-//          1) регистрация новой учётной записи с достаточно уникальным адресом электронной почты
-//           (чтобы не конфликтовало с ранее созданными пользователями),
-//          2) выход (logout), потому что после успешной регистрации автоматически происходит вход,
-//          3) повторный вход в только что созданную учётную запись,
-//          4) и ещё раз выход.
-//    Можно оформить сценарий либо как тест, либо как отдельный исполняемый файл.
-//    Проверки можно никакие не делать, только действия -- заполнение полей, нажатия на кнопки и ссылки.
-//    Если сценарий дошёл до конца, то есть созданный пользователь смог выполнить вход и выход --
-//    значит создание прошло успешно.
-//    В форме регистрации есть капча, её нужно отключить в админке учебного приложения на вкладке Settings -> Security.
-
 
     private void initRegistration() {
-        click(By.linkText("add new"));
-    }
-
-    private void fillRegistrationForm(RegistrationData registrationData) {
-        type(By.name(""), registrationData.getTaxID());
-        type(By.name(""), registrationData.getCompany());
-        type(By.name(""), registrationData.getFirstname());
-        type(By.name(""), registrationData.getLastname());
-        type(By.name(""), registrationData.getAddress1());
-        type(By.name(""), registrationData.getAddress2());
-        type(By.name(""), registrationData.getPostcode());
-        type(By.name(""), registrationData.getCity());
-        type(By.name(""), registrationData.getCountry());
-        type(By.name(""), registrationData.getState());
-        type(By.name(""), registrationData.getEmail());
-        type(By.name(""), registrationData.getPhone());
-        type(By.name(""), registrationData.getDesiredPassword());
-        type(By.name(""), registrationData.getConfirmPassword());
+        click(By.cssSelector("form[name='login_form'] a"));
     }
 
     private void submitRegistration() {
-        click(By.xpath("//div[@id='content']/form/input[21]"));
+        click(By.cssSelector("button[name='create_account']"));
     }
 
-    private void login() {
+    private void fillRegistrationForm(RegistrationData registrationData) {
+        type(By.cssSelector("input[name='tax_id']"), registrationData.getTaxID());
+        type(By.cssSelector("input[name='company']"), registrationData.getCompany());
+        type(By.cssSelector("input[name='firstname']"), registrationData.getFirstname());
+        type(By.cssSelector("input[name='lastname']"), registrationData.getLastname());
+        type(By.cssSelector("input[name='address1']"), registrationData.getAddress1());
+        type(By.cssSelector("input[name='address2']"), registrationData.getAddress2());
+        type(By.cssSelector("input[name='postcode']"), registrationData.getPostcode());
+        type(By.cssSelector("input[name='city']"), registrationData.getCity());
+        select(By.cssSelector("input[name='country_code']"), registrationData.getCountry());
+        select(By.cssSelector("input[name='zone_code']"), registrationData.getState());
+        type(By.cssSelector("input[name='email']"), registrationData.getEmail());
+        type(By.cssSelector("input[name='phone']"), registrationData.getPhone());
+        type(By.cssSelector("input[name='password']"), registrationData.getDesiredPassword());
+        type(By.cssSelector("input[name='confirmed_password']"), registrationData.getConfirmPassword());
+    }
 
+    private void login(String emailaddress, String password) {
+        type(By.cssSelector("[name='email']"), emailaddress);
+        type(By.cssSelector("[name='password']"), password);
+        click(By.cssSelector("[name='login']"));
     }
 
     private void logout() {
-
+        click(By.cssSelector("#box-account li:last-child a"));
     }
 
     private void click(By locator) {
@@ -103,6 +97,11 @@ public class RegistrationTest {
         this.wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         this.driver.findElement(locator).clear();
         this.driver.findElement(locator).sendKeys(text);
+    }
+
+    private void select(By locator, String text) {
+        Select element = new Select(driver.findElement(locator));
+        element.selectByVisibleText(text);
     }
 
     private class RegistrationData {
