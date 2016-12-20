@@ -1,4 +1,4 @@
-package com.litecart.Task12;
+package com.litecart.task12;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
