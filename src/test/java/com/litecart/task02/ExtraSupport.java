@@ -90,6 +90,15 @@ public class ExtraSupport {
         return this.driver.findElements(locator).size() > 0;
     }
 
+    public void clickAndWait(final By by) {
+        this.driver.findElement(by).click();
+        this.waitForAjax();
+    }
+
+    public boolean findSubElements(final WebElement element, final By by) {
+        return element.findElements(by).size() > 0;
+    }
+
     private void waitForAjax() {
         this.wait.until(new Predicate<WebDriver>() {
 
