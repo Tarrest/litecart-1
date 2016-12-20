@@ -43,7 +43,7 @@ public class GoogleSearchTest {
     }
 
     @Test(enabled = true)
-    public void test1() {
+    public void testGoogleSearch() {
         this.driver.get(URL);
         this.driver.findElement(By.cssSelector(FIELD)).sendKeys(SEARCH);
         this.driver.findElement(By.cssSelector(BUTTON)).click();

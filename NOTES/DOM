@@ -1,0 +1,27 @@
+<tbody>
+<tr>
+    <td>
+        <span class="button-set">
+            <button value="Login" name="login" type="submit">Login</button>
+            <button style="font-size: 0.8em;" value="Lost Password"
+            name="lost_password" type="submit">Lost Password</button>
+        </span>
+    </td>
+</tr>
+<tr>
+</tbody>
+
+
+в объектной модели есть:
+button - ТЭГ
+value="Login" name="login" type="submit" - набор АТРИБУТОВ(имя = "значение")
+каждому АТРИБУТУ соответствует СВОЙСТВО
+
+
+каждый элемент в DOM представляет собой объект JavaScript у которого есть набор свойств
+некоторые названия СВОЙСТВ совпадают с названиями ОТРИБУТОВ
+но кроме этого есть еще много других СВОЙСТВ
+
+textContent - это то что находится между тэгами <button>Login</button>
+
+
