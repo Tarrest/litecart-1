@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Selenium" verbose="1" >
+    <test name="SeleniumTests">
+        <classes>
+            <class name="com.litecart.task01.GoogleSearchTest" />
+            <class name="com.litecart.task03.LoginLogoutTest" />
+            <class name="com.litecart.task07.AdminPageTest" />
+            <class name="com.litecart.task08.StickersTest" />
+            <class name="com.litecart.task09.CountriesTest" />
+            <class name="com.litecart.task09.GeoZonesTest" />
+            <class name="com.litecart.task10.CampaignsTest" />
+            <class name="com.litecart.task11.RegistrationTest" />
+            <class name="com.litecart.task12.NewProductTest" />
+        </classes>
+    </test>
+</suite>
