@@ -1,4 +1,4 @@
-package com.litecart.task19;
+package com.litecart.task19.model;
 
 /**
  * Created by pshynin on 12/20/16.
