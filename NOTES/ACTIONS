@@ -1,0 +1,10 @@
+что входит в этот Advanced Interactions API (Actions):
+
+- click
+- sendKeys
+- clickAndHold
+- moveToElement/ moveByOffset
+- release
+- keyDown
+- keyUp
+
