@@ -1,9 +1,7 @@
 package com.litecart.task19.test;
 
-import com.litecart.task19.app.AppManager;
-import com.litecart.task19.test.CartTest;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import com.litecart.task19.app.Application;
+import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
@@ -18,13 +16,9 @@ import java.util.Arrays;
  * Created by pshynin on 12/20/16.
  */
 public class TestBase {
-    private static final int SLEEP_PERIOD = 1000;
-    private static final int TIMEOUT = 30000;
-    private static final String URL = "http://localhost/litecart";
-
-    final AppManager app = new AppManager();
-
-    private Logger logger = LoggerFactory.getLogger(CartTest.class);
+    protected static final Application app
+            = new Application(BrowserType.FIREFOX);
+    private Logger logger = LoggerFactory.getLogger(ProductAddTest.class);
 
     @BeforeMethod
     public void logTestStart(Method m, Object[] p) {
@@ -37,16 +31,13 @@ public class TestBase {
     }
 
     @BeforeTest
-    public void beforeTest() {
-        app.driver = new FirefoxDriver();
-        new WebDriverWait(app.driver, TIMEOUT,
-                SLEEP_PERIOD);
-        app.driver.get(URL);
+    public void setUp() {
+        app.init();
     }
 
     @AfterTest(alwaysRun = true)
-    public void afterTest() {
-        app.driver.quit();
+    public void tearDown() {
+        app.stop();
     }
 
 }
