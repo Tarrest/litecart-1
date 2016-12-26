@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -24,7 +23,6 @@ import static org.testng.Assert.assertTrue;
 public class NewWindowTest {
     private static final String URL = "http://localhost/litecart/admin";
     private static final String COUNTRIES = "http://localhost/litecart/admin/?app=countries&doc=countries";
-
     private static final String EDIT_COUNTRY = "a[href*=countries][title=Edit]";
     private static final String LINKS = "#content a[target=_blank]";
 
