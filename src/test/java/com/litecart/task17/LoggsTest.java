@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
@@ -59,13 +60,15 @@ public class LoggsTest {
 
         List<WebElement> products = driver.findElements(By.cssSelector(PRODUCT));
         for (WebElement product : products) {
+            product = driver.findElement(By.cssSelector(PRODUCT));
             product.click();
 
             LogEntries logs = driver.manage().logs().get(LogType.BROWSER);
             for (LogEntry log : logs) {
                 System.out.println(log.getTimestamp() + " " + log.getLevel() + " " + log.getMessage());
-                driver.navigate().back();
             }
+
+            driver.navigate().back();
         }
     }
 
