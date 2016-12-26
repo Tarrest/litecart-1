@@ -48,12 +48,12 @@ public class LoggsTest {
         login(USERNAME, PASSWORD);
     }
 
-    @AfterTest
+    @AfterTest(alwaysRun = true)
     public void afterTest() {
         driver.quit();
     }
 
-    @Test
+    @Test(enabled = true)
     public void testLogs() {
         driver.navigate().to(CATALOG);
 
