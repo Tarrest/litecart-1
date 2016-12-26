@@ -23,10 +23,10 @@ public class CountriesTest {
     private static final int SLEEP_PERIOD = 1000;
     private static final int TIMEOUT = 30000;
     private static final String URL_APP = "http://localhost/litecart/admin";
-    private final static String URL_COUNTRIES = "http://localhost/litecart/admin/?app=countries&doc=countries";
-    private final static String COUNTRY = "//form[@name='countries_form']//td[5]/a";
-    private final static String COUNTRY_ZONE = "//form[@name='countries_form']//td[6]";
-    private final static String ZONE_ROW = "//*[@id='table-zones']//tr/td[3]";
+    private static final String URL_COUNTRIES = "http://localhost/litecart/admin/?app=countries&doc=countries";
+    private static final String COUNTRY = "//form[@name='countries_form']//td[5]/a";
+    private static final String COUNTRY_ZONE = "//form[@name='countries_form']//td[6]";
+    private static final String ZONE_ROW = "//*[@id='table-zones']//tr/td[3]";
 
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "admin";
