@@ -39,9 +39,9 @@ public class LoggsTest {
     @BeforeTest
     public void beforeTest() {
         DesiredCapabilities caps = DesiredCapabilities.chrome();
-        LoggingPreferences logPrefs = new LoggingPreferences();
-        logPrefs.enable(LogType.BROWSER, Level.ALL);
-        caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+        LoggingPreferences prefs = new LoggingPreferences();
+        prefs.enable(LogType.BROWSER, Level.ALL);
+        caps.setCapability(CapabilityType.LOGGING_PREFS, prefs);
         driver = new ChromeDriver(caps);
         wait = new WebDriverWait(this.driver, TIMEOUT, SLEEP_PERIOD);
         driver.get(URL);
