@@ -47,8 +47,24 @@ public class GoogleSearchTest {
         this.driver.get(URL);
         this.driver.findElement(By.cssSelector(FIELD)).sendKeys(SEARCH);
         this.driver.findElement(By.cssSelector(BUTTON)).click();
-        this.wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(RESULT)));
-        Assert.assertTrue(this.driver.findElement(By.cssSelector(RESULT))
+
+        By result = By.className("g");
+        this.wait.until(ExpectedConditions.presenceOfElementLocated(result));
+        Assert.assertTrue(this.driver.findElement(result)
                 .getText().contains(SEARCH), "Search results not found");
     }
 }
+
+        /*
+        Подготовьте инфраструктуру для выполнения домашних заданий:
+            1) Создайте репозиторий на сервисе GitHub, в который будут отправляться домашние задания.
+                Для тех, кто раньше не работал с этим сервисом, внизу есть видео-инструкция.
+                (любители C# при желании могут использовать сервис visualstudio.com,
+                в этом случае не забудьте предоставить доступ тренерам к репозиторию --
+                barancev@gmail.com и igor.lyubin@outlook.com).
+            2) Установите всё необходимое для работы программное обеспечение.
+            3) Создайте проект внутри локальной копии репозитория, подключите к проекту Selenium
+                и сделайте небольшой работающий тест, который просто запускает браузер,
+                открывает какую-нибудь страницу и закрывает браузер.
+            4) Уложите всё в репозиторий и синхронизируйте с удалённым сервером.
+         */
