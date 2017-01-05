@@ -3,8 +3,12 @@ $ - первый элемент (FindElement)
 $$ - все элементы (FindElements)
 
 ПАРАМЕТРЫ ПОИСКА:
-"[checked]" - проверяет наличие атрибута
-"[name = email]" - проверяет совпадение атрибута и значения
+# - идентификаторы (ul#username) - find.By.id("username")   cssSelector("#username")
+. - классы (li.error)        - find.By.className("error")   cssSelector(".error")
+[название = значение]        - find.By.name("password")     cssSelector("[name = password]")
+
+"[checked]" - только название атрибута
+"[name = email]" - название атрибута и значение атрибута
 "[title* = Name]" - проверяет частичное совпадение
 "[src^ = http]" - проверяет начинается с текста
 "[src$ = .pdf]" - проверяет заканчиватся с текста
