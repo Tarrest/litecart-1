@@ -17,10 +17,10 @@ public class GoogleSearchTest {
     private static final String URL = "http://google.com";
     private static final String FIELD = "#lst-ib";
     private static final String BUTTON = "#_fZl";
-    private static final String RESULT = "div.f";
+    private static final String RESULT = "#res";
     private static final String SEARCH = "selenium";
 
-    private static final int SLEEP_PERIOD = 1000;
+    private static final int SLEEP_PERIOD = 3000;
     private static final int TIMEOUT = 30000;
 
     private WebDriver driver;
@@ -48,10 +48,8 @@ public class GoogleSearchTest {
         this.driver.findElement(By.cssSelector(FIELD)).sendKeys(SEARCH);
         this.driver.findElement(By.cssSelector(BUTTON)).click();
 
-        By result = By.className("g");
-        this.wait.until(ExpectedConditions.presenceOfElementLocated(result));
-        Assert.assertTrue(this.driver.findElement(result)
-                .getText().contains(SEARCH), "Search results not found");
+        this.wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(RESULT)));
+        Assert.assertTrue(this.driver.findElement(By.cssSelector(RESULT)).getText().contains(SEARCH));
     }
 }
 
