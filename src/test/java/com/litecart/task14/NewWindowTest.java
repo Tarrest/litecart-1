@@ -48,7 +48,8 @@ public class NewWindowTest {
         driver.quit();
     }
 
-    @Test(enabled = true)
+    @SuppressWarnings("deprecation")
+	@Test(enabled = true)
     public void testNewWindow() {
         driver.get(COUNTRIES);
 
