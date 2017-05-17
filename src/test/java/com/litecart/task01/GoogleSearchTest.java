@@ -1,6 +1,7 @@
 package com.litecart.task01;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,6 +16,11 @@ import org.testng.annotations.Test;
  */
 public class GoogleSearchTest {
     private static final String URL = "http://google.com";
+    private static final String PENTAHO_URL = "http://10.177.176.152:8080/pentaho/Login";
+    private static final String PENTAHO_WEB_URL = "http://10.177.176.152:8080/pentaho/api/repos/%3Ahome%3Aadmin%3AA-%5B~!%40%23%24%25%5E%26*()%7B%7D%7C.%2C%5D-%3D_%2B%7C%3B%3F%3C%3E~%60%09_06123752.xanalyzer/editor?ts=1494955560763";
+    private static final String PENTAHO_XML_URL = "http://10.177.176.152:8080/pentaho/api/repos/%3Ahome%3Aadmin%3AA-%5B~!%40%23%24%25%5E%26*()%7B%7D%7C.%2C%5D-%3D_%2B%7C%3B%3F%3C%3E~%60%09_06123752.xanalyzer/parameter?ts=1494955560763";
+
+
     private static final String FIELD = "#lst-ib";
     private static final String BUTTON = "#_fZl";
     private static final String RESULT = "#res";
@@ -50,6 +56,28 @@ public class GoogleSearchTest {
 
         this.wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(RESULT)));
         Assert.assertTrue(this.driver.findElement(By.cssSelector(RESULT)).getText().contains(SEARCH));
+    }
+
+    /*
+     *  Pentaho project try selenium 3
+     */
+    @Test
+    public void test() {
+        driver.get(PENTAHO_URL);
+        driver.findElement(By.xpath("//div[@id='eval-users-toggle']//div[.='Login as an Evaluator']")).click();
+        driver.findElement(By.xpath("//div[@id='role-admin-panel']//button[.='GO']")).click();
+
+        String selectLinkOpeninNewTab = Keys.chord(Keys.CONTROL,Keys.RETURN);
+        driver.findElement(By.linkText(PENTAHO_XML_URL)).sendKeys(selectLinkOpeninNewTab);
+
+        driver.get(PENTAHO_WEB_URL);
+        driver.get(PENTAHO_XML_URL);
+
+        driver.findElement(By.cssSelector("div.custom-dropdown-label")).click();
+        driver.findElement(By.id("gwt-uid-9")).click();
+        driver.findElement(By.cssSelector("div.pentaho-tabWidgetLabel")).click();
+        driver.findElement(By.id("openTabInNewWindow")).click();
+        driver.findElement(By.id("okButton")).click();
     }
 }
 

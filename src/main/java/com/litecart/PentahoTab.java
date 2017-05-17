@@ -24,7 +24,6 @@ public class PentahoTab {
 
 	@BeforeTest
 	public void setUp() throws Exception {
-		//System.setProperty("webdriver.gecko.driver", "Users/pshynin/devel/tools/gecodriver");
 		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 
@@ -34,17 +33,6 @@ public class PentahoTab {
 		// this.driver.get(URL);
 	}
 
-	@Test
-	public void test() {
-		driver.get("http://10.177.176.152:8080/pentaho/Login");
-		driver.findElement(By.xpath("//div[@id='eval-users-toggle']//div[.='Login as an Evaluator']")).click();
-		driver.findElement(By.xpath("//div[@id='role-admin-panel']//button[.='GO']")).click();
-		driver.findElement(By.cssSelector("div.custom-dropdown-label")).click();
-		driver.findElement(By.id("gwt-uid-9")).click();
-		driver.findElement(By.cssSelector("div.pentaho-tabWidgetLabel")).click();
-		driver.findElement(By.id("openTabInNewWindow")).click();
-		driver.findElement(By.id("okButton")).click();
-	}
 
 	@AfterTest(alwaysRun = true)
 	public void afterTest() {
